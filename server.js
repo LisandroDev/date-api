@@ -12,20 +12,19 @@ app.use(bodyParser.json());
 const isValid = (date) => {
   const utcObj = new Date(date);
   const unixObj = new Date(date * 1000);
-  if (isNaN(utcObj.getTime()) == true && isNaN(unixObj.getTime()) == true){
-    return false
+  if (isNaN(utcObj.getTime()) == true && isNaN(unixObj.getTime()) == true) {
+    return false;
   }
-  return true
+  return true;
 };
 
 const createResponse = (date) => {
   let dateObj;
-  if(Number.isInteger(Number(date))){
-    const num = +date
-    dateObj = new Date(num)
-  }
-  else{
-    dateObj = new Date(date)
+  if (Number.isInteger(Number(date))) {
+    const num = +date;
+    dateObj = new Date(num);
+  } else {
+    dateObj = new Date(date);
   }
   return { unix: dateObj.getTime(), utc: dateObj.toUTCString() };
 };
@@ -40,9 +39,9 @@ app.get("/api/hello", (req, res) => {
 
 app.get("/api/:date", (req, res) => {
   const input = req.params.date;
-  if(!isValid(input)){
-    res.json({error: 'Invalid Date'});
-    return
+  if (!isValid(input)) {
+    res.json({ error: "Invalid Date" });
+    return;
   }
   res.json(createResponse(input));
 });
